@@ -1,0 +1,139 @@
+	-----BASE DE DATOS ALMAZEN-----
+CREATE SCHEMA `almazen` ;
+
+
+	___TABLA EMPRESAS_____
+
+CREATE TABLE `almazen`.`empresas` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `Nombre_Empresa` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`));
+
+
+
+	_____TABLA EMPLEADOS______
+
+
+CREATE TABLE `almazen`.`empleados` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nombre_empleado` VARCHAR(45) NOT NULL,
+  `id_empresa` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_empleados_empresas_idempresa` (`id_empresa` ASC),
+  CONSTRAINT `fk_empleados_empresas_idempresa`
+    FOREIGN KEY (`id_empresa`)
+    REFERENCES `almazen`.`empresas` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
+	_____TABLA ÚTILES____
+
+CREATE TABLE `almazen`.`utiles` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `idEmpresa` INT(11) NOT NULL,
+  `Codigo_Alquiler` VARCHAR(45) NOT NULL,
+  `Marca` VARCHAR(45) NOT NULL,
+  `Modelo` VARCHAR(45) NOT NULL,
+  `Categoria` VARCHAR(45) NOT NULL,
+  `estado` VARCHAR(100) NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_utiles_empresas_idempresa` (`idEmpresa` ASC),
+  CONSTRAINT `fk_utiles_empresa`
+    FOREIGN KEY (`idEmpresa`)
+    REFERENCES `almazen`.`empresas` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+	______TABLA EMPLE_HERRA_______
+
+CREATE TABLE `almazen`.`emple_herra` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `idempleado` INT(11) NOT NULL,
+  `idutil` INT(11) NOT NULL,
+  `fecha_hora` DATETIME NOT NULL,
+  `isdevuelto` BIT NOT NULL,
+  `incidencia` VARCHAR(200) NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_empleherra_empleados_id` (`idempleado` ASC),
+  INDEX `fk_empleherra_utiles_id` (`idutil` ASC),
+  CONSTRAINT `fk_empleherra_empleados`
+    FOREIGN KEY (`idempleado`)
+    REFERENCES `almazen`.`empleados` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_empleherra_utiles`
+    FOREIGN KEY (`idutil`)
+    REFERENCES `almazen`.`utiles` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
+	______TABLA CONTRATO_ALQUILER______
+
+CREATE TABLE `almazen`.`alquiler_utiles` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `idempresa` INT(11) NOT NULL,
+  `idutil` INT(11) NOT NULL,
+  `euros_dia` DOUBLE NOT NULL,
+  `inicio_contrato` DATE NOT NULL,
+  `final_contrato` DATE NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_alquiler_empresa_idempresa_id` (`idempresa` ASC),
+  INDEX `fk_alquiler_utiles_idutil_id` (`idutil` ASC),
+  CONSTRAINT `fk_alquiler_empresa_idempresa`
+    FOREIGN KEY (`idempresa`)
+    REFERENCES `almazen`.`empresas` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_alquiler_utiles_idutil`
+    FOREIGN KEY (`idutil`)
+    REFERENCES `almazen`.`utiles` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
+	_____ TABLA HERRAMIENTAS______
+
+CREATE TABLE `almazen`.`herramientas` (
+  `idherramientas` INT NOT NULL,
+  PRIMARY KEY (`idherramientas`),
+  CONSTRAINT `fk_herramientas_utiles_id`
+    FOREIGN KEY (`idherramientas`)
+    REFERENCES `almazen`.`utiles` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
+	______ TABLA VEHICULOS______
+
+CREATE TABLE `almazen`.`vehiculos` (
+  `idvehiculo` INT NOT NULL,
+  `horas_uso` INT(11) NOT NULL,
+  PRIMARY KEY (`idvehiculo`),
+  CONSTRAINT `fk_vehiculos_utiles_id`
+    FOREIGN KEY (`idvehiculo`)
+    REFERENCES `almazen`.`utiles` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
+	______TABLA REPOSTAJES______
+
+CREATE TABLE `almazen`.`repostajes` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `idvehiculo` INT(11) NOT NULL,
+  `litros_totales` DOUBLE NULL,
+  `litros_repostados` DOUBLE NULL,
+  `fecha_hora` DATETIME NULL,
+  PRIMARY KEY (`id`, `idvehiculo`),
+  INDEX `fk_repostajes_vehiculos_id_idx` (`idvehiculo` ASC),
+  CONSTRAINT `fk_repostajes_vehiculos_id`
+    FOREIGN KEY (`idvehiculo`)
+    REFERENCES `almazen`.`vehiculos` (`idvehiculo`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
+
+
