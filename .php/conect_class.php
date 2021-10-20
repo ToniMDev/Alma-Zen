@@ -38,6 +38,6 @@
     $socket="";
     $user="root";
     $password="";
-    $dbname="AlmaZen";
+    $dbname="almazen";
 
     $MyBBDD = new BBDD($host, $user, $password, $dbname, $port, $socket);
