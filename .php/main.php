@@ -1,5 +1,5 @@
-/**
+<?php
 
-    PENDIENTE: 
+// PENDIENTE: código
 
-*/
+?>
