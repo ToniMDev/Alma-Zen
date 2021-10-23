@@ -9,6 +9,9 @@ CREATE TABLE `almazen`.`empresas` (
   `Nombre_Empresa` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`));
 
+ALTER TABLE `almazen`.`empresas` 
+CHANGE COLUMN `id` `id` INT(11) NOT NULL DEFAULT 1 ;
+
 
 
 	_____TABLA EMPLEADOS______
