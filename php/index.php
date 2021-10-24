@@ -21,6 +21,19 @@
         $sql = "INSERT INTO empresas (Nombre_Empresa) VALUES ('$Nombre_Empresa');";
         $MyBBDD->consulta($sql);
     }
+
+    $sql = "SELECT * FROM empresas;";
+    $MyBBDD->consulta($sql);
+
+    /*while ($fila = $MyBBDD->extraerRegistro()) {
+        $idTema = $fila['idTema'];
+        echo "<a href='comentarios.php?idTema=$idTema'>" . $fila['nombre'] . "</a> <br>";
+    }*/
+
+    while ($fila = $MyBBDD->extraerRegistro()) {
+        $id = $fila['id']; // id de la empresa
+        echo "Empresa: <a href='empresas.php?id=$id'>".$fila['Nombre_Empresa']. "</a><br>";
+    }
     ?>
 
     <form method="POST">
