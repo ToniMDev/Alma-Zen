@@ -138,5 +138,28 @@ CREATE TABLE `almazen`.`repostajes` (
     ON UPDATE NO ACTION);
 
 
+    _________TABLA ROLES__________ 
+
+    CREATE TABLE `almazen`.`roles` (
+  `Admin` VARCHAR(45) NOT NULL,
+  `Almacenero` VARCHAR(45) NULL,
+  `Trabajador` VARCHAR(45) NULL,
+  `Encargado` VARCHAR(45) NULL);
+
+_________TABLA USUARIOS__________
+
+CREATE TABLE `almazen`.`usuario` (
+  `Id` INT NOT NULL AUTO_INCREMENT,
+  `Nombre` VARCHAR(45) NOT NULL,
+  `Apellidos` VARCHAR(45) NOT NULL,
+  `IdEmpresa` INT(11) NOT NULL,
+  `Rol` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`Id`),
+  INDEX `fk_usuarios_empresa_idx` (`IdEmpresa` ASC),
+  CONSTRAINT `fk_usuarios_empresa`
+    FOREIGN KEY (`IdEmpresa`)
+    REFERENCES `almazen`.`empresas` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
 
 
